@@ -1,0 +1,1 @@
+../../parcel/src/main/resources/templates.txt
