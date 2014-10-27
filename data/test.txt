@@ -1,0 +1,4 @@
+NP -> DET N | "Julie"
+NP -> "Bob"
+DET -> "the"
+N -> "dog" | "cat"

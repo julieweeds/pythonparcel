@@ -110,6 +110,43 @@ class CorpusGenerator:
             for rule in self.rules[key]:
                 print key, " : ", rule.show()
 
+    def generate(self,key,instrings):
+        outstrings=[]
+        for instring in instrings:
+            outstrings.append(self.generate_one(key,instring))
+        return outstrings
+
+    def generate_one(self,key,instring):
+        outstrings=[]
+        for rule in self.rules[key]:
+            returnedstrings=(self.expand_rule(rule,instring))
+        return outstrings
+
+    def expand_rule(self,rule,instring):
+        if rule.isLex():
+            return self.expand_lexrule(rule,instring)
+        else:
+            return self.expand_gramrule(rule,instring)
+
+    def expand_lexrule(self,rule,instring):
+        outstrings=[]
+        for token in rule.expansions:
+            outstring=instring+" "+token
+            outstrings.append(outstring)
+        return outstrings
+
+    def expand_gramrule(self,rule,instring):
+        for expansion in rule.expansions:
+            if self.terminal(expansion):
+                instring = instring + expansion
+            else:
+                instring
+    def buildcorpus(self):
+        mystrings= self.generate("ENTITY",[""])
+        for astring in mystrings:
+            print astring
+
+
 
 if __name__ =="__main__":
 
