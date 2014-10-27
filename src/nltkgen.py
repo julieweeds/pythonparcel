@@ -12,7 +12,7 @@ class CorpusGenerator:
         self.grammarstring=""
 
     def readfile(self,filename):
-        
+
 
         print "Reading "+filename
         processed=0
@@ -50,7 +50,8 @@ class CorpusGenerator:
         sentences=0
         for sentence in generate(self.grammar,start=topstart,n=max):
 #        for sentence in generate(self.grammar,n=self.no_sents):
-            print (' '.join(sentence))
+            if max<1000000:
+                print (' '.join(sentence))
             sentences+=1
         print "Produced sentences: "+str(sentences)
 
