@@ -1,1 +1,110 @@
-../../parcel/src/main/resources/templates.txt
+//lexicon
+WANT_FP --> ["I want","I wish","I would like","I'd like"]
+GIVEME_FP --> ["give me","let me have"]
+BUY_IMP --> ["buy","order","purchase","get"]
+SEND_IMP --> ["send","give"]
+PLEASE --> ["please"]
+TO --> ["to"]
+ME --> ["me"]
+FOR --> ["for"]
+ON --> ["on"]
+DET --> ["a","the"]
+TRACK --> ["track","song"]
+SOMETHING --> ["something","anything"]
+WITH --> ["with"]
+BY --> ["by","sung by","performed by","directed by","composed by"]
+PERFORMING_ON_IT --> ["performing on it","singing on it"]
+PRESENT --> ["present","gift"]
+FOR --> ["for"]
+AS --> ["as"]
+POSS --> ["his","her","their"]
+NUMBER --> ["number","phone number","telephone number","mobile number"]
+ITEM_WORD --> ["album","film"]
+ORD --> ["first","last","most recent","second"]
+YES --> ["yes","y","yep"]
+NO --> ["no","n","nope"]
+IS --> ["is"]
+//grammar
+//general
+U --> PRIMARY_POLITE
+PRIMARY_POLITE --> PLEASE S
+PRIMARY_POLITE --> S PLEASE
+PRIMARY_POLITE --> S
+S --> WANT_FP ENTITY
+S --> GIVEME_FP ENTITY
+S --> WANT_FP TO PRIMARYINTENT_IMP
+S --> PRIMARYINTENT_IMP
+
+//buy intent
+PRIMARYINTENT --> BUY_IMP ENTITY
+
+//send intent
+PRIMARYINTENT --> PRIMARYINTENT_NO
+PRIMARYINTENT --> PRIMARYINTENT_NO OCCASION_PHRASE
+
+PRIMARYINTENT_NO --> SEND_IMP ENTITY TO RECIPIENT
+PRIMARYINTENT_NO --> SEND_IMP RECIPIENT ENTITY
+PRIMARYINTENT_NO --> BUY_IMP ENTITY FOR RECIPIENT
+PRIMARYINTENT_NO --> BUY_IMP RECIPIENT ENTITY
+
+//entity
+ENTITY --> ENTITY_BASIC
+ENTITY --> ENTITY_PLAIN BY PCONTRIBUTOR
+ENTITY --> ENTITY_PLAIN WITH PCONTRIBUTOR PERFORMING_ON_IT
+ENTITY --> ENTITY_PLAIN WITH PTRACK
+//ENTITY --> CONTRIBUTOR_POSS ENTITY_ORD
+
+ENTITY_PLAIN --> DET ITEM
+ENTITY_PLAIN --> DET ENTITY_ORD
+ENTITY_PLAIN --> SOMETHING
+ENTITY_PLAIN --> ENTITY_BASIC
+
+ENTITY_BASIC --> {0}
+ENTITY_BASIC --> DET {4} OF {0}
+
+ENTITY_ORD --> ORD ITEM
+ENTITY_ORD --> {0}
+
+ITEM --> {1}
+ITEM --> ITEM_WORD
+
+//recipient
+RECIPIENT --> {6}
+RECIPIENT --> {7}
+RECIPIENT --> ME
+RECIPIENT --> {6} ON {7}
+RECIPIENT --> {6} NUMBER {7}
+//RECIPIENT --> {6}, NUMBER {7}
+
+//contributor
+PCONTRIBUTOR --> {3}
+//CONTRIBUTOR_POSS --> {3}'s
+
+//track
+PTRACK --> DET TRACK {2}
+PTRACK --> {2}
+
+//occasion phrase
+OCCASION_PHRASE --> FORA {9}
+OCCASION_PHRASE --> ASA {9} PRESENT
+ASA --> AS POSS
+ASA --> AS DET
+ASA --> FORA
+FORA --> FOR POSS
+
+//set contact number
+U --> SET_CONTACT
+
+SET_CONTACT --> {6} IS ON {7}
+SET_CONTACT --> DET NUMBER FOR {6} IS {7}
+SET_CONTACT --> {7}
+SET_CONTACT --> {6} {7}
+//SET_CONTACT -->{6}'s NUMBER IS {7}
+
+//accept intent
+U --> YES
+
+//reject intent
+U --> NO
+
+
