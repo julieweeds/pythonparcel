@@ -1,15 +1,20 @@
 //grammar
 //general
 U -> PRIMARY_POLITE
-PRIMARY_POLITE -> PLEASE S
-PRIMARY_POLITE -> S PLEASE
-PRIMARY_POLITE -> S
+U -> QUESTION
+PRIMARY_POLITE -> S PLEASE | S | PLEASE S
+
 S -> WANT_FP ENTITY
 S -> GIVEME_FP ENTITY
 S -> WISH_FP TO PRIMARYINTENT_IMP
 S -> PRIMARYINTENT_IMP
-//S -> CAN_I PRIMARYINTENT_IMP ?
-//S -> CAN_I HAVE ENTITY ?
+
+
+QUESTION -> POLITE_Q "?" | POLITE_Q
+POLITE_Q -> PLEASE Q | Q | Q PLEASE
+Q -> CAN_QUEST PRIMARYINTENT_IMP
+Q -> CAN_QUEST HAVE ENTITY
+
 
 //buy intent
 PRIMARYINTENT_IMP -> BUY_IMP ENTITY
@@ -25,23 +30,22 @@ PRIMARYINTENT_NO -> BUY_IMP RECIPIENT ENTITY
 
 //entity
 ENTITY -> ENTITY_BASIC
-ENTITY -> ENTITY_PLAIN BY PCONTRIBUTOR
-ENTITY -> ENTITY_PLAIN WITH PCONTRIBUTOR PERFORMING_ON_IT
-ENTITY -> ENTITY_PLAIN WITH PTRACK
-//ENTITY -> CONTRIBUTOR_POSS ENTITY_ORD
-//ENTITY -> CONTRIBUTOR_POSS {0}
+ENTITY -> MUSICALENTITY_PLAIN WITH PTRACK
+ENTITY -> CONTRIBUTOR_POSS ENTITY_ORD
+ENTITY -> CONTRIBUTOR_POSS "{0}"
 
-ENTITY_PLAIN -> INDEF ITEM
-ENTITY_PLAIN -> SOMETHING
-ENTITY_PLAIN -> ENTITY_BASIC
+ENTITY -> MUSICALENTITY_PLAIN MUSICALBY PCONTRIBUTOR
+ENTITY -> MUSICALENTITY_PLAIN WITH PCONTRIBUTOR MUSICALPERFORMING_ON_IT
+ENTITY -> FILMENTITY_PLAIN FILMBY PCONTRIBUTOR
+ENTITY -> FILMENTITY_PLAIN WITH PCONTRIBUTOR FILMPERFORMING_ON_IT
+
+MUSICALENTITY_PLAIN -> INDEF MUSICALITEM | SOMETHING | ENTITY_BASIC
+FILMENTITY_PLAIN -> INDEF FILMITEM | SOMETHING | ENTITY_BASIC
 
 ENTITY_BASIC -> "{0}"
 ENTITY_BASIC -> DET "{4}" OF "{0}"
 
-//ENTITY_ORD -> ORD ITEM
-
-ITEM -> "{1}"
-ITEM -> ITEM_WORD
+ENTITY_ORD -> ORD ITEM
 
 //recipient
 RECIPIENT -> "{6}"
@@ -49,11 +53,11 @@ RECIPIENT -> "{7}"
 RECIPIENT -> ME
 RECIPIENT -> "{6}" ON "{7}"
 RECIPIENT -> "{6}" NUMBER "{7}"
-//RECIPIENT -> "{6}" , NUMBER "{7}"
+RECIPIENT -> "{6}" "," NUMBER "{7}"
 
 //contributor
 PCONTRIBUTOR -> "{3}"
-//CONTRIBUTOR_POSS -> "{3}" 's
+CONTRIBUTOR_POSS -> "{3}" "'s"
 
 //track
 PTRACK -> DEF TRACK "{2}"
@@ -74,7 +78,7 @@ SET_CONTACT -> "{6}" IS ON "{7}"
 SET_CONTACT -> DET NUMBER FOR "{6}" IS "{7}"
 SET_CONTACT -> "{7}"
 SET_CONTACT -> "{6}" "{7}"
-//SET_CONTACT ->"{6}" 's NUMBER IS "{7}"
+SET_CONTACT ->"{6}" "'s" NUMBER IS "{7}"
 
 //accept intent
 U -> YES
@@ -99,17 +103,21 @@ INDEF -> "a"
 TRACK -> "track"|"song"
 SOMETHING -> "something"|"anything"
 WITH -> "with"
-BY -> "by"|"sung by"|"performed by"|"directed by"|"composed by"
-PERFORMING_ON_IT -> "performing on it"|"singing on it"
+BY -> "by"
+MUSICALBY -> "performed by"|"sung by"|"composed by"|BY
+FILMBY -> "directed by"|"starring"|BY
+MUSICALPERFORMING_ON_IT -> "performing on it"|"singing on it"
+FILMPERFORMING_ON_IT -> "acting in it"|"directing it"
 PRESENT -> "present"|"gift"
 FOR -> "for"
 AS -> "as"
 POSS -> "his"|"her"|"their"
 NUMBER -> "number"|"phone number"|"telephone number"|"mobile number"
-ITEM_WORD -> "album"|"film"
-//ORD -> "first"|"last"|"most recent"|"second"
+MUSICALITEM -> "album"|"{1}"
+FILMITEM -> "film"|"movie"|"{1}"
+ORD -> "first"|"last"|"most recent"|"second"
 YES -> "yes"|"y"|"yep"
 NO -> "no"|"n"|"nope"
 IS -> "is"
-//CAN_QUEST -> "can I"|"may I"
-//HAVE -> "have"
+CAN_QUEST -> "can I"|"may I"
+HAVE -> "have"

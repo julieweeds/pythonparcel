@@ -49,17 +49,14 @@ class CorpusGenerator:
 
         sentences=0
         for sentence in generate(self.grammar,start=topstart,n=max):
-#        for sentence in generate(self.grammar,n=self.no_sents):
-            if max<1000000:
+            if max<100000000:
                 print (' '.join(sentence))
             sentences+=1
         print "Produced sentences: "+str(sentences)
 
     def findstart(self,start):
         for prod in self.grammar.productions():
-            #print prod.lhs(),start
             if str(prod.lhs())==start:
-                #print prod
                 return prod.lhs()
 
 
@@ -77,8 +74,7 @@ if __name__=='__main__':
     myGen = CorpusGenerator()
     myGen.readfile(filename)
     print "Starting with rules for: "+start
-    #myGen.showgrammar()
-    #myGen.findrules(start)
+    myGen.showgrammar()
     myGen.generate(start,n=no_sents)
 
 
