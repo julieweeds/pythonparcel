@@ -49,7 +49,7 @@ class CorpusGenerator:
 
         sentences=0
         for sentence in generate(self.grammar,start=topstart,n=max):
-            if max<10000000:
+            if max<1000000000:
                 print (' '.join(sentence))
             sentences+=1
         print "Produced sentences: "+str(sentences)
