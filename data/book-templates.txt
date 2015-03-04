@@ -56,11 +56,15 @@ ENTITY_BASIC -> DET "{4}" OF "{0}"
 ENTITY_ORD -> ORD ITEM
 
 //recipient
-RECIPIENT -> "{6}"
-RECIPIENT -> "{7}"
-RECIPIENT -> "{6}" ON "{7}"
-RECIPIENT -> "{6}" NUMBER "{7}"
-RECIPIENT -> "{6}" "," NUMBER "{7}"
+RECIPIENT -> PHONE_NUMBER
+RECIPIENT -> RECIPIENT_BASIC
+
+RECIPIENT_BASIC -> "{6}"
+RECIPIENT_BASIC -> MY RELATIVE
+
+RECIPIENT -> RECIPIENT_BASIC ON PHONE_NUMBER
+RECIPIENT -> RECIPIENT_BASIC NUMBER PHONE_NUMBER
+RECIPIENT -> RECIPIENT_BASIC "," NUMBER PHONE_NUMBER
 
 //contributor
 PCONTRIBUTOR -> "{3}"
@@ -132,5 +136,8 @@ IS -> "is"
 CAN_QUEST -> "can I"|"may I"
 HAVE -> "have"
 OCCASION -> PERSONAL_OCCASION | GENERAL_OCCASION
-PERSONAL_OCCASION -> "birthday"|"anniversary"|"wedding"|"christening"
-GENERAL_OCCASION -> "Christmas"|"Easter"|"Hanukah"
+PERSONAL_OCCASION -> "birthday"|"anniversary"|"wedding"
+GENERAL_OCCASION -> "Christmas"|"Easter"|"Hanukkah"
+PHONE_NUMBER -> "07915834222"|"01563 578233"
+MY -> "my"
+RELATIVE -> "sister"|"cousin"|"brother"
